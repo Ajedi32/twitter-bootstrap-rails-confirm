@@ -17,15 +17,6 @@ TwitterBootstrapConfirmBox = (message, element, callback) ->
     )
   )
 
-  $("#confirmation_dialog").addClass("fade") if element.data("confirm-fade") || $.fn.twitter_bootstrap_confirmbox.defaults.fade
-  $("#confirmation_dialog .modal-body").html(message)
-  $("#confirmation_dialog .modal-header h3").html(element.data("confirm-title") || $.fn.twitter_bootstrap_confirmbox.defaults.title || window.top.location.origin)
-  $("#confirmation_dialog .modal-footer .cancel").html(element.data("confirm-cancel") || $.fn.twitter_bootstrap_confirmbox.defaults.cancel)
-  $("#confirmation_dialog .modal-footer .proceed").html(element.data("confirm-proceed") || $.fn.twitter_bootstrap_confirmbox.defaults.proceed).attr("class", $.fn.twitter_bootstrap_confirmbox.defaults.proceed_class).addClass(element.data("confirm-proceed-class"))
-  $("#confirmation_dialog").modal("show").on("hidden", ->
-    $(this).remove()
-  )
-
   $("#confirmation_dialog .proceed").click (event) ->
     event.preventDefault()
     $("#confirmation_dialog").modal("hide")
@@ -36,6 +27,18 @@ TwitterBootstrapConfirmBox = (message, element, callback) ->
     event.preventDefault()
     $("#confirmation_dialog").modal("hide")
     false
+
+  $("#confirmation_dialog").on("hidden", ->
+    $(this).remove()
+  )
+
+  $("#confirmation_dialog").addClass("fade") if element.data("confirm-fade") || $.fn.twitter_bootstrap_confirmbox.defaults.fade
+  $("#confirmation_dialog .modal-body").html(message)
+  $("#confirmation_dialog .modal-header h3").html(element.data("confirm-title") || $.fn.twitter_bootstrap_confirmbox.defaults.title || window.top.location.origin)
+  $("#confirmation_dialog .modal-footer .cancel").html(element.data("confirm-cancel") || $.fn.twitter_bootstrap_confirmbox.defaults.cancel)
+  $("#confirmation_dialog .modal-footer .proceed").html(element.data("confirm-proceed") || $.fn.twitter_bootstrap_confirmbox.defaults.proceed).attr("class", $.fn.twitter_bootstrap_confirmbox.defaults.proceed_class).addClass(element.data("confirm-proceed-class"))
+
+  $("#confirmation_dialog").modal("show")
 
 $.rails.allowAction = (element) ->
   message = element.data("confirm")
